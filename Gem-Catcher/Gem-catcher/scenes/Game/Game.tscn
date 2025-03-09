@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://ftl3g1syetm7"]
+
+[ext_resource type="Texture2D" uid="uid://b6jyuokd1qc8v" path="res://assets/GameBg.png" id="1_bekgd"]
+[ext_resource type="PackedScene" uid="uid://ct818uqpgm665" path="res://scenes/Paddle/Paddle.tscn" id="2_tt4u6"]
+[ext_resource type="PackedScene" uid="uid://cp60ppvtegt1d" path="res://scenes/Gem/Gem.tscn" id="3_1asa3"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(578, 313)
+scale = Vector2(0.615365, 0.649305)
+texture = ExtResource("1_bekgd")
+
+[node name="Paddle" parent="." instance=ExtResource("2_tt4u6")]
+position = Vector2(606, 602)
+
+[node name="Gem" parent="." instance=ExtResource("3_1asa3")]
+position = Vector2(393, 150)
