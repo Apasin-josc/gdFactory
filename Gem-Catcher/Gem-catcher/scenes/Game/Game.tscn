@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://ftl3g1syetm7"]
+[gd_scene load_steps=6 format=3 uid="uid://ftl3g1syetm7"]
 
+[ext_resource type="Script" uid="uid://dmnj4sw3rk34y" path="res://scenes/Game/Game.gd" id="1_1asa3"]
 [ext_resource type="Texture2D" uid="uid://b6jyuokd1qc8v" path="res://assets/GameBg.png" id="1_bekgd"]
 [ext_resource type="PackedScene" uid="uid://ct818uqpgm665" path="res://scenes/Paddle/Paddle.tscn" id="2_tt4u6"]
-[ext_resource type="PackedScene" uid="uid://cp60ppvtegt1d" path="res://scenes/Gem/Gem.tscn" id="3_1asa3"]
+[ext_resource type="AudioStream" uid="uid://cu7aqq3qs1vbk" path="res://assets/bgm_action_5.mp3" id="4_1asa3"]
+[ext_resource type="AudioStream" uid="uid://43g7ngla8vsh" path="res://assets/spell1_0.wav" id="5_yqgss"]
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_1asa3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(578, 313)
@@ -14,5 +17,32 @@ texture = ExtResource("1_bekgd")
 [node name="Paddle" parent="." instance=ExtResource("2_tt4u6")]
 position = Vector2(606, 602)
 
-[node name="Gem" parent="." instance=ExtResource("3_1asa3")]
-position = Vector2(393, 150)
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_1asa3")
+volume_db = -15.0
+autoplay = true
+
+[node name="ScoreSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_yqgss")
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = 22.0
+offset_top = 18.0
+offset_right = 104.0
+offset_bottom = 85.0
+theme_override_colors/font_color = Color(0, 0.756863, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.737255, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 5
+theme_override_constants/shadow_outline_size = 3
+theme_override_font_sizes/font_size = 48
+text = "000"
+
+[connection signal="area_entered" from="Paddle" to="." method="_on_paddle_area_entered"]
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_timer_timeout"]
