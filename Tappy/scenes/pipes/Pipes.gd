@@ -24,3 +24,8 @@ func die() -> void:
 func _on_screen_exited() -> void:
 	print("_on_screen_exited")
 	die()
+
+
+func _on_pipe_body_entered(body: Node2D) -> void:
+	if body is Tappy:
+		body.die()
