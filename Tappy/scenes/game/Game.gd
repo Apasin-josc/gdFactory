@@ -3,10 +3,10 @@ extends Node2D
 
 const PIPES = preload("res://scenes/pipes/Pipes.tscn")
 
-
 @onready var pipes_holder: Node = $PipesHolder
 @onready var upper_point: Marker2D = $UpperPoint
 @onready var lower_point: Marker2D = $LowerPoint
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
