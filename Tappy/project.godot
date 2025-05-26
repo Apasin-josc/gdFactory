@@ -15,6 +15,10 @@ run/main_scene="uid://cnjqpjwfdu4y7"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SignalHub="*res://globals/SignalHub.gd"
+
 [debug]
 
 settings/stdout/print_fps=true
