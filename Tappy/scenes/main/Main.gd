@@ -2,6 +2,7 @@ extends Control
 
 
 #const GAME = preload("res://scenes/game/Game.tscn")
+@onready var high_score_label: Label = $MarginContainer/HighScoreLabel
 
 
 #func _input(event: InputEvent) -> void:
@@ -17,4 +18,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	get_tree().paused = false
+	high_score_label.text = "%04d" % ScoreManager.high_score
+
+	

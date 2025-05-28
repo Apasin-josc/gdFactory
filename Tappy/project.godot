@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 SignalHub="*res://globals/SignalHub.gd"
 GameManager="*res://globals/GameManager.gd"
+ScoreManager="*res://globals/ScoreManager.gd"
 
 [debug]
 
