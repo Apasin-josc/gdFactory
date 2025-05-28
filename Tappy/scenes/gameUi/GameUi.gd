@@ -1,10 +1,12 @@
 extends Control
 
 #var MAIN = load("res://scenes/main/Main.tscn")
+const GAME_OVER = preload("res://assets/audio/game_over.wav")
 @onready var game_over_label: Label = $GameOverLabel
 @onready var press_space_label: Label = $PressSpaceLabel
 @onready var timer: Timer = $Timer
 @onready var score_label: Label = $MarginContainer/ScoreLabel
+@onready var sound: AudioStreamPlayer = $Sound
 
 var _score: int = 0
 
@@ -28,10 +30,14 @@ func _enter_tree() -> void:
 	SignalHub.on_plane_died.connect(on_plane_died)
 
 func on_point_scored() -> void:
+	sound.play()
 	_score += 1
 	score_label.text = "%04d" % _score
 
 func on_plane_died() -> void:
+	sound.stop()
+	sound.stream = GAME_OVER
+	sound.play()
 	game_over_label.show()
 	#game_over_label.visible = true
 	timer.start()

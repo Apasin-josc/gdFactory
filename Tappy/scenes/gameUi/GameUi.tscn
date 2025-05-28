@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://daicamhq5vr2i"]
+[gd_scene load_steps=7 format=3 uid="uid://daicamhq5vr2i"]
 
 [ext_resource type="Script" uid="uid://doa3m3rkp7xa2" path="res://scenes/gameUi/GameUi.gd" id="1_14qof"]
 [ext_resource type="FontFile" uid="uid://d4jnf41dtocrb" path="res://assets/fonts/LuckiestGuy-Regular.ttf" id="1_ieve0"]
+[ext_resource type="AudioStream" uid="uid://bb7ujb1vywf2t" path="res://assets/audio/score.wav" id="3_oxlwh"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_14qof"]
 font = ExtResource("1_ieve0")
@@ -86,5 +87,8 @@ label_settings = SubResource("LabelSettings_oxlwh")
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_oxlwh")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
