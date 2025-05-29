@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://b142ofb111ncm"]
+
+[ext_resource type="Texture2D" uid="uid://cuajtxwjfchmo" path="res://assets/background/sky.png" id="1_s1lgg"]
+[ext_resource type="Script" uid="uid://ydlijt4ceq1b" path="res://scenes/simpletransition/SimpleTransition.gd" id="1_x7ado"]
+[ext_resource type="FontFile" uid="uid://d4jnf41dtocrb" path="res://assets/fonts/LuckiestGuy-Regular.ttf" id="2_x7ado"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_dsgeq"]
+font = ExtResource("2_x7ado")
+font_size = 72
+font_color = Color(1, 0, 0.172549, 1)
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0.878431, 0, 0, 0.854902)
+
+[node name="SimpleTransition" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_x7ado")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_s1lgg")
+expand_mode = 5
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -164.5
+offset_top = -74.5
+offset_right = 164.5
+offset_bottom = 74.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "LOADING...
+"
+label_settings = SubResource("LabelSettings_dsgeq")
