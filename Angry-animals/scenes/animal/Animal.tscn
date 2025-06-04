@@ -14,7 +14,6 @@ bounce = 0.2
 radius = 19.0263
 
 [node name="Animal" type="RigidBody2D"]
-position = Vector2(353, 143)
 input_pickable = true
 physics_material_override = SubResource("PhysicsMaterial_n06ko")
 freeze = true
@@ -26,15 +25,6 @@ script = ExtResource("1_gm4mo")
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("1_n06ko")
 
-[node name="debugLabel" type="Label" parent="."]
-offset_left = -26.0
-offset_top = -48.0
-offset_right = 257.0
-offset_bottom = 219.0
-scale = Vector2(0.192713, 0.148261)
-theme_override_font_sizes/font_size = 96
-text = "sdfsdf"
-
 [node name="arrow" type="Sprite2D" parent="."]
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("2_gm4mo")
@@ -43,16 +33,28 @@ offset = Vector2(150, 0)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_xq731")
 
+[node name="debugLabel" type="Label" parent="."]
+offset_left = -26.0
+offset_top = -133.0
+offset_right = 257.0
+offset_bottom = 134.0
+scale = Vector2(0.192713, 0.148261)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 106
+text = "sdfsdf"
+
+[node name="kickSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_426we")
+
 [node name="stretchSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_05udb")
 
 [node name="launchSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_lbj45")
 
-[node name="kickSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("5_426we")
-
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="sleeping_state_changed" from="." to="." method="_on_sleeping_state_changed"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
