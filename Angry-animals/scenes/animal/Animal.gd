@@ -3,6 +3,8 @@ extends RigidBody2D
 enum AnimalState {Ready, Drag, Release}
 const DRAG_LIM_MAX: Vector2 = Vector2(0, 60)
 const DRAG_LIM_MIN: Vector2 = Vector2(-60, 0)
+const IMPULSE_MULT: float = 20.0
+const IMPULSE_MAX: float = 1200.0
 
 @onready var arrow: Sprite2D = $arrow
 @onready var debug_label: Label = $debugLabel
@@ -45,9 +47,21 @@ func update_debug_label() -> void:
 	ds += "_drag_start:%.1f, %.1f\n" % [_drag_start.x, _drag_start.y]
 	ds += "_dragged_vector:%.1f, %.1f" % [_dragged_vector.x, _dragged_vector.y]
 	debug_label.text = ds
+	
+func die() -> void:
+	SignalHub.emit_on_animal_died()
+	queue_free()
 #endregion
 
 #region drag
+
+func update_arrow_scale() -> void:
+	var imp_len: float = calculate_impulse().length()
+	var perc: float = clamp(imp_len / IMPULSE_MAX, 0.0, 1.0)
+	arrow.scale.x = lerp(_arrow_scale_x, _arrow_scale_x * 2, perc)
+	#rotating now the arrow
+	arrow.rotation = (_start - position).angle()
+
 func start_dragging() -> void:
 	arrow.show()
 	_drag_start = get_global_mouse_position()
@@ -65,15 +79,21 @@ func handle_dragging() -> void:
 	
 	_dragged_vector = new_drag_vector
 	position = _start + _dragged_vector
+	
+	update_arrow_scale()
 
 #endregion
 
 #region release
 
 func start_release() -> void:
-	arrow.show()
+	arrow.hide()
 	launch_sound.play()
 	freeze = false
+	apply_central_impulse(calculate_impulse())
+
+func calculate_impulse() -> Vector2:
+	return _dragged_vector * -IMPULSE_MULT
 	
 #endregion
 #region state
@@ -104,7 +124,7 @@ func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> voi
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	pass # Replace with function body.
+	die()
 
 
 func _on_sleeping_state_changed() -> void:
