@@ -11,6 +11,7 @@ const IMPULSE_MAX: float = 1200.0
 @onready var kick_sound: AudioStreamPlayer2D = $kickSound
 @onready var stretch_sound: AudioStreamPlayer2D = $stretchSound
 @onready var launch_sound: AudioStreamPlayer2D = $launchSound
+const CUP = preload("res://scenes/cup/Cup.tscn")
 
 var _state: AnimalState = AnimalState.Ready
 var _start: Vector2 = Vector2.ZERO
@@ -128,9 +129,17 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 
 func _on_sleeping_state_changed() -> void:
-	pass # Replace with function body.
+	if sleeping == true:
+		for body in get_colliding_bodies():
+			if body is Cup:
+				body.die()
+		#spawning to the next frame solving E 0:00:13:757   
+		#LevelBase.gd:20 @ spawn_animal(): Can't change this state while flushing queries. 
+		#Use call_deferred() or set_deferred() to change monitoring state instead.
+		call_deferred("die")
 
 
 func _on_body_entered(body: Node) -> void:
-	pass # Replace with function body.
+	if body is Cup and kick_sound.playing == false:
+		kick_sound.play()
 #endregion
