@@ -1,5 +1,9 @@
 extends CharacterBody2D
 
+#creating signals for the player_underscore script
+signal OnUpdateHealth(health:int)
+signal OnUpdateScore(score:int)
+
 #variables, exported to modify them inside the inspector
 @export var move_speed : float = 100
 @export var acceleration : float = 50
@@ -7,12 +11,19 @@ extends CharacterBody2D
 @export var gravity : float = 500
 @export var jump_force : float = 200
 
+
+@export var health : int = 3
+
 var move_input : float #this is going to be a number than can be zero, if we press left -1, right 1
 
 #creating a reference of the sprite2D to make the flip_horizontally
 @onready var sprite : Sprite2D = $Sprite
 @onready var anim : AnimationPlayer = $AnimationPlayer
 
+#audio
+@onready var audio : AudioStreamPlayer = $AudioStreamPlayer
+var take_damage_sfx: AudioStream = preload("res://Audio/take_damage.wav")
+var coin_sfx : AudioStream = preload("res://Audio/coin.wav")
 
 #this is a function that gets called independent from the frame rate, process just run on the fps
 func _physics_process(delta: float) -> void:
@@ -45,6 +56,9 @@ func _process(delta:float) -> void:
 	if velocity.x != 0:
 		sprite.flip_h = velocity.x > 0
 	
+	if global_position.y > 200:
+		game_over()
+	
 	_manage_animation()
 
 #func to play anmitaions
@@ -55,3 +69,29 @@ func _manage_animation() -> void:
 		anim.play("move")
 	else:
 		anim.play("idle")
+
+func take_damage(amount:int) -> void:
+	health -= amount
+	OnUpdateHealth.emit(health)
+	_damage_flash()
+	play_sound(take_damage_sfx)
+	
+	if health <= 0:
+		call_deferred("game_over")
+
+func game_over():
+	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
+	
+func increase_score(amount:int) -> void:
+	PlayerStats.score += amount
+	OnUpdateScore.emit(PlayerStats.score)
+	play_sound(coin_sfx)
+
+func _damage_flash() -> void:
+	sprite.modulate = Color.RED
+	await get_tree().create_timer(0.05).timeout
+	sprite.modulate = Color.WHITE
+
+func play_sound(sound : AudioStream) -> void:
+	audio.stream = sound
+	audio.play()
