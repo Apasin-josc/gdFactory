@@ -21,8 +21,8 @@ func _physics_process(delta: float) -> void:
 	#
 	var move_direction:Vector3 = Vector3(move_input.x, 0, move_input.y)
 	#setting up the player velocity, *velocity* is a vector3 variable that is contained within the characterbody
-	velocity.x = move_direction.x
-	velocity.z = move_direction.z
+	velocity.x = move_direction.x * move_speed
+	velocity.z = move_direction.z * move_speed
 	
 	#move and slide, this is a function contained within the characterbody3d
 	#this basically takes our velocity, it moves us based on that and then it does collision detection and everythin else
