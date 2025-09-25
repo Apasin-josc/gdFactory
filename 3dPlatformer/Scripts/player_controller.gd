@@ -10,8 +10,13 @@ extends CharacterBody3D
 #function where we run all of our physics code that we want to run esentially every frame
 func _physics_process(delta: float) -> void:
 	#gravity
-	
+	#accelerating when we fall
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+		
 	#jump
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		velocity.y = jump_force
 	
 	#movement
 	#a negative x, positive x, negative y, positive y
