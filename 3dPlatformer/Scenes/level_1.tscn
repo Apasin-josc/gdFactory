@@ -1,9 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://sxu6gjtptgry"]
+[gd_scene load_steps=13 format=3 uid="uid://sxu6gjtptgry"]
 
 [ext_resource type="ArrayMesh" uid="uid://cmeu6bvdtgeg7" path="res://Models/Platformer/block-grass-low-large.obj" id="1_vk57k"]
 [ext_resource type="ArrayMesh" uid="uid://cg4lvalcnjv5k" path="res://Models/Platformer/block-grass-narrow.obj" id="2_8ffim"]
 [ext_resource type="ArrayMesh" uid="uid://wabjiicgydb3" path="res://Models/Platformer/block-grass-overhang-hexagon.obj" id="3_xfk5q"]
 [ext_resource type="PackedScene" uid="uid://cbeuoqhh836qr" path="res://Scenes/player.tscn" id="4_7p6j4"]
+[ext_resource type="PackedScene" uid="uid://dg7w78nlr7f2j" path="res://Scenes/enemy.tscn" id="5_6444e"]
+[ext_resource type="PackedScene" uid="uid://cv1d25m1mkub2" path="res://Scenes/coin.tscn" id="6_evi0p"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xfk5q"]
 
@@ -118,3 +120,23 @@ shape = SubResource("ConvexPolygonShape3D_7p6j4")
 
 [node name="Player" parent="." instance=ExtResource("4_7p6j4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5260763, 0)
+
+[node name="Coins" type="Node" parent="."]
+
+[node name="Coin" parent="Coins" instance=ExtResource("6_evi0p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.59259, 1.0756984, 0)
+
+[node name="Coin2" parent="Coins" instance=ExtResource("6_evi0p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9933926, 1.0756984, 2.6083665)
+
+[node name="Enemies" type="Node" parent="."]
+
+[node name="Enemy" parent="Enemies" instance=ExtResource("5_6444e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5550948, 1.6454034, 0)
+
+[node name="Enemy2" parent="Enemies" instance=ExtResource("5_6444e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2522323, 1.9694121, 0.82253516)
+
+[node name="Enemy3" parent="Enemies" instance=ExtResource("5_6444e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.81616807, 1.9694121, 2.2495356)
+move_direction = Vector3(7, 1.5, 0)

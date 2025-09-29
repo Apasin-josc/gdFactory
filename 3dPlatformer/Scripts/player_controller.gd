@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+@export var health:int = 3
+
 @export var move_speed:float = 3.0
 @export var jump_force:float = 8.0
 @export var gravity:float = 20
@@ -33,3 +35,15 @@ func _physics_process(delta: float) -> void:
 	#this basically takes our velocity, it moves us based on that and then it does collision detection and everythin else
 	move_and_slide()
 	
+func _process(delta:float) -> void :
+	if global_position.y < -5:
+		_game_over()
+	
+func take_damage(amount:int) -> void:
+	health -= amount
+	
+	if health <= 0:
+		_game_over()
+		
+func _game_over() -> void:
+	get_tree().reload_current_scene()
